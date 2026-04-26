@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc5830abh3cl2"]
+
+[ext_resource type="Script" uid="uid://cserwcw2d2ubn" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://brwwrx51xqq6j" path="res://icon.svg" id="1_v0iea"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cvnsp")
+SPEED = 325.0
+SPEED_INCREASE = 2680.0
+AIR_FRICTION = 0.984
+GROUND_FRICTION = 0.86
+PUSH_STRENGTH = 2700.0
+PUSH_DEGRATION = 2.0
+PUSH_MAX_SPEED = 3800.0
+PUSH_GRAVITY_PERCENTAGE = 0.72
+PULL_STRENGTH = 2800.0
+PULL_DEGRATION = 1.4
+PULL_MAX_SPEED = 3600.0
+PULL_MOMENTUM_ROTATION = 1.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.4, 1)
+shape = SubResource("RectangleShape2D_cvnsp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.08, 0.16)
+texture = ExtResource("1_v0iea")
+
+[node name="LoonyTime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="LoonyTime" to="." method="_on_loony_time_timeout"]

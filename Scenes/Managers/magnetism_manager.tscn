@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://lar2oda5khwa"]
+
+[ext_resource type="Script" uid="uid://dnial8xo5m1ft" path="res://Scripts/magnetism_manager.gd" id="1_651df"]
+[ext_resource type="Texture2D" uid="uid://brwwrx51xqq6j" path="res://icon.svg" id="2_uwn2v"]
+
+[node name="MagnetismManager" type="Node2D"]
+script = ExtResource("1_651df")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_uwn2v")
