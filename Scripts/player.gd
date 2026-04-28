@@ -106,7 +106,6 @@ func _physics_process(delta: float) -> void:
 				var forceDegration = 10*speedPercentage
 				forceDegration = forceDegration**PULL_DEGRATION
 				forceDegration = 2**-forceDegration
-				print_debug(forceDegration)
 				
 				var angleDegration = abs(angleToMetal/PI)
 				angleDegration = 1-angleDegration
@@ -114,8 +113,6 @@ func _physics_process(delta: float) -> void:
 				var angleDegrationToAdd = 1 - forceDegration
 				angleDegrationToAdd *= angleDegration
 				forceDegration += angleDegrationToAdd
-				print_debug(forceDegration)
-				print_debug(velocity.length())
 				
 				velocity -= magnetismForce * PULL_STRENGTH * forceDegration * delta
 				
