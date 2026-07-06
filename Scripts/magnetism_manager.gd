@@ -7,6 +7,8 @@ signal selected_metal_location(Position : Vector2)
 var lockedOn : bool = false
 var closestPosition : Vector2
 
+@export var metalObjectType : PackedScene
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -33,6 +35,12 @@ func _process(delta: float) -> void:
 			if mousePos.distance_to(cell) <= distanceToClosestPosition:
 				distanceToClosestPosition = mousePos.distance_to(cell)
 				closestPosition = cell
-	
+		
+		for metal in get_tree().get_nodes_in_group("MetalObject"):
+			var metalObjectPos = metal.get_parent().position
+			if mousePos.distance_to(metalObjectPos) <= distanceToClosestPosition:
+				distanceToClosestPosition = mousePos.distance_to(metalObjectPos)
+				closestPosition = metalObjectPos
+		
 	self.position = closestPosition
 	selected_metal_location.emit(closestPosition)

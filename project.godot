@@ -25,6 +25,10 @@ window/size/mode=2
 
 project/assembly_name="Mistborn Fan Game"
 
+[global_group]
+
+MetalObject=""
+
 [input]
 
 move_right={

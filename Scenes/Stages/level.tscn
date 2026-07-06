@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://b81hlwr44gjeh"]
+[gd_scene load_steps=10 format=4 uid="uid://b81hlwr44gjeh"]
 
 [ext_resource type="Texture2D" uid="uid://c7fv5x2aktdc8" path="res://Assets/world_tileset.png" id="1_jko6y"]
 [ext_resource type="PackedScene" uid="uid://cc5830abh3cl2" path="res://Scenes/Objects/player.tscn" id="2_lbk2m"]
 [ext_resource type="Texture2D" uid="uid://cicsarch4ycse" path="res://Assets/platforms.png" id="3_lbk2m"]
 [ext_resource type="PackedScene" uid="uid://lar2oda5khwa" path="res://Scenes/Managers/magnetism_manager.tscn" id="4_ao771"]
+[ext_resource type="PackedScene" uid="uid://d2hyo31b2i0ek" path="res://Scenes/Objects/enemyBaseClass.tscn" id="5_sbrpa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k5f4k"]
 texture = ExtResource("1_jko6y")
@@ -208,5 +209,8 @@ tile_set = SubResource("TileSet_sbrpa")
 
 [node name="MagnetismManager" parent="." node_paths=PackedStringArray("MetalTileMap") instance=ExtResource("4_ao771")]
 MetalTileMap = NodePath("../MetalTiles")
+
+[node name="Enemy" parent="." instance=ExtResource("5_sbrpa")]
+position = Vector2(358, -39)
 
 [connection signal="selected_metal_location" from="MagnetismManager" to="Player" method="_on_magnetism_manager_selected_metal_location"]
