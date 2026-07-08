@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cc5830abh3cl2" path="res://Scenes/Objects/player.tscn" id="2_lbk2m"]
 [ext_resource type="Texture2D" uid="uid://cicsarch4ycse" path="res://Assets/platforms.png" id="3_lbk2m"]
 [ext_resource type="PackedScene" uid="uid://lar2oda5khwa" path="res://Scenes/Managers/magnetism_manager.tscn" id="4_ao771"]
-[ext_resource type="PackedScene" uid="uid://d2hyo31b2i0ek" path="res://Scenes/Objects/enemyBaseClass.tscn" id="5_sbrpa"]
+[ext_resource type="PackedScene" uid="uid://kihwwmy8a73k" path="res://Scenes/Objects/Enemies/flying_enemy.tscn" id="5_sbrpa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k5f4k"]
 texture = ExtResource("1_jko6y")
@@ -210,7 +210,16 @@ tile_set = SubResource("TileSet_sbrpa")
 [node name="MagnetismManager" parent="." node_paths=PackedStringArray("MetalTileMap") instance=ExtResource("4_ao771")]
 MetalTileMap = NodePath("../MetalTiles")
 
-[node name="Enemy" parent="." instance=ExtResource("5_sbrpa")]
-position = Vector2(358, -39)
+[node name="FlyingEnemy" parent="." instance=ExtResource("5_sbrpa")]
+position = Vector2(425, -48)
+SPEED = 75
+
+[node name="FlyingEnemy2" parent="." instance=ExtResource("5_sbrpa")]
+position = Vector2(-6, -234)
+SPEED = 60
+
+[node name="FlyingEnemy3" parent="." instance=ExtResource("5_sbrpa")]
+position = Vector2(318, -273)
+SPEED = 20
 
 [connection signal="selected_metal_location" from="MagnetismManager" to="Player" method="_on_magnetism_manager_selected_metal_location"]

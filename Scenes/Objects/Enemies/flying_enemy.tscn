@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://kihwwmy8a73k"]
+
+[ext_resource type="PackedScene" uid="uid://d2hyo31b2i0ek" path="res://Scenes/Objects/Enemies/enemyBaseClass.tscn" id="1_qbkws"]
+[ext_resource type="Script" uid="uid://cfb16eqip7gwj" path="res://Scripts/flying_enemy.gd" id="2_dvini"]
+[ext_resource type="PackedScene" uid="uid://dffl6e2daeojf" path="res://Scenes/Properties/metal_object.tscn" id="2_lpewf"]
+
+[node name="FlyingEnemy" instance=ExtResource("1_qbkws")]
+script = ExtResource("2_dvini")
+
+[node name="MetalObject" parent="." index="2" instance=ExtResource("2_lpewf")]
