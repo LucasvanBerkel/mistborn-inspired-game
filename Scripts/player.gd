@@ -132,5 +132,5 @@ func _physics_process(delta: float) -> void:
 func _on_loony_time_timeout() -> void: #handles what happens when the loony time timer runs out
 	loonyTime = false
 
-func _on_magnetism_manager_selected_metal_location(Position: Vector2) -> void: #signal that gives location of closest metal to mouse
-	closestMetalToMousePos = Position
+func _on_magnetism_manager_selected_metal_location(selectedNode : Node) -> void: #signal that gives location of closest metal to mouse
+	closestMetalToMousePos = selectedNode.position

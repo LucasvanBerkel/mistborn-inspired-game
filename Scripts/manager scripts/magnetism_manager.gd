@@ -3,11 +3,11 @@ class_name MagnetismManager
 
 @export var MetalTileMap : TileMapLayer
 
-signal selected_metal_location(Position : Vector2)
+signal selected_metal_location(selectedNode : Node)
 var staticMetalObject : PackedScene = load("res://Scenes/Objects/static_metal_object.tscn")
 
 var lockedOn : bool = false
-var closestPosition : Vector2
+var closestNode : Node
 
 @export var metalObjectType : PackedScene
 
@@ -21,33 +21,36 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
+	if lockedOn == false:
+		var mousePos : Vector2
+		mousePos = get_viewport().get_camera_2d().get_global_mouse_position()
+		
+		closestNode = GetClosestMetalToPoint(mousePos)
+		
+	else:
+		closestNode = GetClosestMetalToPoint(closestNode.position)
+	
+	
 	if Input.is_action_pressed("Push") or Input.is_action_pressed("Pull"):
 		lockedOn = true
 	else:
 		lockedOn = false
 	
-	if lockedOn == false:
-		var mousePos : Vector2
-		mousePos = get_viewport().get_camera_2d().get_global_mouse_position()
-		
-		closestPosition = GetClosestMetalToPoint(mousePos)
-	else:
-		closestPosition = GetClosestMetalToPoint(closestPosition)
 	
-	self.position = closestPosition
-	selected_metal_location.emit(closestPosition)
+	self.position = closestNode.position
+	selected_metal_location.emit(closestNode)
 
-func GetClosestMetalToPoint(point : Vector2):
+func GetClosestMetalToPoint(point : Vector2) -> Node:
 	
-	var closestMetal : Vector2
+	var closestMetal : Node
 	var distanceToClosestPosition : float = 100000000
 	var metalFound : bool = false
 	
 	for metal in get_tree().get_nodes_in_group("MetalObject"):
-		var metalObjectPos = metal.get_parent().position
-		if point.distance_to(metalObjectPos) <= distanceToClosestPosition:
-			distanceToClosestPosition = point.distance_to(metalObjectPos)
-			closestMetal = metalObjectPos
+		var metalObject = metal.get_parent()
+		if point.distance_to(metalObject.position) <= distanceToClosestPosition:
+			distanceToClosestPosition = point.distance_to(metalObject.position)
+			closestMetal = metalObject
 			metalFound = true
 	if metalFound == false:
 		pass
