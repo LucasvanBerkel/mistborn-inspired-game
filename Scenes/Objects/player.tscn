@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfgsd"]
-size = Vector2(4, 5)
+size = Vector2(12, 24)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_cvnsp")
@@ -39,7 +39,7 @@ one_shot = true
 [node name="AttackBox" parent="." instance=ExtResource("3_picsy")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2(0, 10.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_dfgsd")
 
 [connection signal="timeout" from="LoonyTime" to="." method="_on_loony_time_timeout"]

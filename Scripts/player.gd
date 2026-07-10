@@ -23,8 +23,9 @@ extends CharacterBody2D
 var loonyTime : bool = false
 var loonyTimer
 
-var closestMetalToMousePos : Vector2 = Vector2(0,0)
+var selectedMetalNode : Node
 var selectedMetalPos : Vector2
+var metalPropertyNode : MetalComponent
 
 func _ready() -> void:
 	pass
@@ -61,15 +62,13 @@ func _physics_process(delta: float) -> void:
 		elif velocity.x >= SPEED:
 			velocity.x = -SPEED
 	
-	
 	var PushorPull : int = 0
 	
+
 	if Input.is_action_pressed("Push"): #push action handler
-		selectedMetalPos = closestMetalToMousePos
 		PushorPull = 1
 	
 	if Input.is_action_pressed("Pull"): #pull action handler
-		selectedMetalPos = closestMetalToMousePos
 		if PushorPull == 0:
 			PushorPull = -1
 		else:
@@ -120,11 +119,12 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.(or reduced gravity when "pushing")
 	if not is_on_floor():
-		if PushorPull == 1:
+		if is_instance_valid(metalPropertyNode) && metalPropertyNode.IsAtackable == true && PushorPull != 0:
+			pass
+		elif PushorPull == 1:
 			velocity += get_gravity() * PUSH_GRAVITY_PERCENTAGE * delta
 		else:
 			velocity += get_gravity() * delta
-	
 	
 	move_and_slide()
 
@@ -132,5 +132,7 @@ func _physics_process(delta: float) -> void:
 func _on_loony_time_timeout() -> void: #handles what happens when the loony time timer runs out
 	loonyTime = false
 
-func _on_magnetism_manager_selected_metal_location(selectedNode : Node) -> void: #signal that gives location of closest metal to mouse
-	closestMetalToMousePos = selectedNode.position
+func _on_magnetism_manager_selected_metal_location(selectedNode : Node, metalComponent : MetalComponent) -> void: #signal that gives location of closest metal to mouse
+	selectedMetalNode = selectedNode
+	selectedMetalPos = selectedNode.position
+	metalPropertyNode = metalComponent

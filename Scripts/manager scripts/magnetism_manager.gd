@@ -8,6 +8,7 @@ var staticMetalObject : PackedScene = load("res://Scenes/Objects/static_metal_ob
 
 var lockedOn : bool = false
 var closestNode : Node
+var closestMetalNode : MetalComponent
 
 @export var metalObjectType : PackedScene
 
@@ -25,20 +26,28 @@ func _process(delta: float) -> void:
 		var mousePos : Vector2
 		mousePos = get_viewport().get_camera_2d().get_global_mouse_position()
 		
-		closestNode = GetClosestMetalToPoint(mousePos)
-		
-	else:
-		closestNode = GetClosestMetalToPoint(closestNode.position)
+		var distanceToClosestPosition : float = 100000000
+
+		for metal in get_tree().get_nodes_in_group("MetalObject"):
+			var metalObject = metal.get_parent()
+			if mousePos.distance_to(metalObject.position) <= distanceToClosestPosition:
+				distanceToClosestPosition = mousePos.distance_to(metalObject.position)
+				closestNode = metalObject
+				closestMetalNode = metal
 	
 	
 	if Input.is_action_pressed("Push") or Input.is_action_pressed("Pull"):
-		lockedOn = true
+		if is_instance_valid(closestNode):
+			lockedOn = true
+		else:
+			lockedOn = false
 	else:
 		lockedOn = false
+		
 	
-	
-	self.position = closestNode.position
-	selected_metal_location.emit(closestNode)
+	if is_instance_valid(closestNode):
+		self.position = closestNode.position
+		selected_metal_location.emit(closestNode, closestMetalNode)
 
 func GetClosestMetalToPoint(point : Vector2) -> Node:
 	
