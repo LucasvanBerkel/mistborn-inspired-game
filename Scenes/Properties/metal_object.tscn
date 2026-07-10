@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dffl6e2daeojf"]
-
-[ext_resource type="Script" uid="uid://dy3ymjsg4x11s" path="res://Scripts/metal_object.gd" id="1_1sl8g"]
-
-[node name="MetalObject" type="Node2D" groups=["MetalObject"]]
-script = ExtResource("1_1sl8g")

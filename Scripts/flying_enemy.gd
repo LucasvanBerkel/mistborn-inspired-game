@@ -9,5 +9,5 @@ func _physics_process(delta: float) -> void:
 	velocity.x += (randf() -0.5) * SPEED
 	velocity.y += (randf() -0.5) * SPEED
 	velocity *= 0.96
-
+	
 	move_and_slide()

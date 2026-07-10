@@ -1,4 +1,4 @@
-class_name metal_object
+class_name MetalComponent
 extends Node2D
 
 @export var IsAtackable : bool = false

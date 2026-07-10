@@ -28,6 +28,8 @@ project/assembly_name="Mistborn Fan Game"
 [global_group]
 
 MetalObject=""
+IsStandardMetal="group describing objects that have the standard metal property"
+IsAtackableMetal="Group of objects that have the the attackable metal property, ie. think enemies."
 
 [input]
 

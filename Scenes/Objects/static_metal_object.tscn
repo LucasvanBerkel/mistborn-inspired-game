@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn05kjvfrkf0f"]
+
+[ext_resource type="Script" uid="uid://rkecco565a5u" path="res://Scenes/Objects/static_metal_object.gd" id="1_ptx0d"]
+[ext_resource type="PackedScene" uid="uid://dffl6e2daeojf" path="res://Scenes/Properties/metal_component.tscn" id="1_rejgt"]
+
+[node name="StaticMetalObject" type="Node2D"]
+script = ExtResource("1_ptx0d")
+
+[node name="MetalComponent" parent="." instance=ExtResource("1_rejgt")]

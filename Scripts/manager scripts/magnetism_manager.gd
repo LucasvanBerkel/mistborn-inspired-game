@@ -1,8 +1,10 @@
 extends Node
+class_name MagnetismManager
 
 @export var MetalTileMap : TileMapLayer
 
 signal selected_metal_location(Position : Vector2)
+var staticMetalObject : PackedScene = load("res://Scenes/Objects/static_metal_object.tscn")
 
 var lockedOn : bool = false
 var closestPosition : Vector2
@@ -11,7 +13,10 @@ var closestPosition : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	for cell in MetalTileMap.get_used_cells():
+		var metalForCell = staticMetalObject.instantiate()
+		metalForCell.position = MetalTileMap.map_to_local(cell)
+		add_child(metalForCell)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -36,20 +41,14 @@ func GetClosestMetalToPoint(point : Vector2):
 	
 	var closestMetal : Vector2
 	var distanceToClosestPosition : float = 100000000
-	
-	var cellCords : Array
-	for cell in MetalTileMap.get_used_cells():
-		cellCords.append(MetalTileMap.map_to_local(cell))
-	
-	for cell in cellCords:
-		if point.distance_to(cell) <= distanceToClosestPosition:
-			distanceToClosestPosition = point.distance_to(cell)
-			closestMetal = cell
+	var metalFound : bool = false
 	
 	for metal in get_tree().get_nodes_in_group("MetalObject"):
 		var metalObjectPos = metal.get_parent().position
 		if point.distance_to(metalObjectPos) <= distanceToClosestPosition:
 			distanceToClosestPosition = point.distance_to(metalObjectPos)
 			closestMetal = metalObjectPos
-	
+			metalFound = true
+	if metalFound == false:
+		pass
 	return closestMetal

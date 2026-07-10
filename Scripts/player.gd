@@ -1,16 +1,18 @@
 extends CharacterBody2D
 
-@export var magnetism_Manager : Node
+@export var magnetism_Manager : MagnetismManager
 @export var SPEED : float = 320.0
 @export var SPEED_INCREASE : float = 60.0
 @export var JUMP_VELOCITY : float = 500.0
 @export_range(0, 1) var AIR_FRICTION : float = 0.972
 @export_range(0, 1) var GROUND_FRICTION : float = 0.87
+
 @export_category("Push")
 @export var PUSH_STRENGTH : float = 28
 @export var PUSH_DEGRATION : float = 3
 @export var PUSH_MAX_SPEED: float = 10000
 @export_range(0,1) var PUSH_GRAVITY_PERCENTAGE: float = 0.6
+
 @export_category("Pull")
 @export var PULL_STRENGTH : float = 38
 @export var PULL_DEGRATION : float = 1.3
@@ -115,7 +117,6 @@ func _physics_process(delta: float) -> void:
 				forceDegration += angleDegrationToAdd
 				
 				velocity -= magnetismForce * PULL_STRENGTH * forceDegration * delta
-				
 	
 	# Add the gravity.(or reduced gravity when "pushing")
 	if not is_on_floor():
@@ -133,6 +134,3 @@ func _on_loony_time_timeout() -> void: #handles what happens when the loony time
 
 func _on_magnetism_manager_selected_metal_location(Position: Vector2) -> void: #signal that gives location of closest metal to mouse
 	closestMetalToMousePos = Position
-
-func _calculate_force_degration() -> float: #function that calculates the force degration, still needs to be written.
-	return 0

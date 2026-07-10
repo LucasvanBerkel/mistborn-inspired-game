@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc5830abh3cl2"]
+[gd_scene load_steps=6 format=3 uid="uid://cc5830abh3cl2"]
 
 [ext_resource type="Script" uid="uid://cserwcw2d2ubn" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://brwwrx51xqq6j" path="res://icon.svg" id="1_v0iea"]
+[ext_resource type="PackedScene" uid="uid://bbsbh75q7tapj" path="res://Scenes/Properties/attack_box.tscn" id="3_picsy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfgsd"]
+size = Vector2(4, 5)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_cvnsp")
@@ -31,5 +35,11 @@ texture = ExtResource("1_v0iea")
 [node name="LoonyTime" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="AttackBox" parent="." instance=ExtResource("3_picsy")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(0, 10.5)
+shape = SubResource("RectangleShape2D_dfgsd")
 
 [connection signal="timeout" from="LoonyTime" to="." method="_on_loony_time_timeout"]
