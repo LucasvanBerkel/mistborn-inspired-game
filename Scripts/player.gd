@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.(or reduced gravity when "pushing")
 	if not is_on_floor():
-		if is_instance_valid(metalPropertyNode) && metalPropertyNode.IsAtackable == true && PushorPull != 0:
+		if is_instance_valid(metalPropertyNode) && metalPropertyNode.IsAtackable == true && PushorPull == -1:
 			pass
 		elif PushorPull == 1:
 			velocity += get_gravity() * PUSH_GRAVITY_PERCENTAGE * delta
