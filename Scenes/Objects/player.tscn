@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cc5830abh3cl2"]
 
-[ext_resource type="Script" uid="uid://cserwcw2d2ubn" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://cserwcw2d2ubn" path="res://Scripts/characters/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://brwwrx51xqq6j" path="res://icon.svg" id="1_v0iea"]
 [ext_resource type="PackedScene" uid="uid://bbsbh75q7tapj" path="res://Scenes/Properties/attack_box.tscn" id="3_picsy"]
 
