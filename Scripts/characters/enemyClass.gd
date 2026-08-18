@@ -7,3 +7,10 @@ func _physics_process(delta: float) -> void:
 	velocity *= AIRDRAG
 	
 	move_and_slide()
+
+func GetPlayer() -> PlayerCharacter:
+	if get_parent().has_method("GetPlayer"):
+		return get_parent().GetPlayer()
+	else:
+		push_error("enemy parent is not an enemymanager")
+		return

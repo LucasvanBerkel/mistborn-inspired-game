@@ -1,11 +1,17 @@
 extends CharacterBody2D
+class_name PlayerCharacter
 
+@export_category("dependencies")
 @export var magnetism_Manager : MagnetismManager
+@export var attack_Box : AttackBox
+
+@export_category("basic movement values")
 @export var SPEED : float = 320.0
 @export var SPEED_INCREASE : float = 60.0
 @export var JUMP_VELOCITY : float = 500.0
 @export_range(0, 1) var AIR_FRICTION : float = 0.972
-@export_range(0, 1) var GROUND_FRICTION : float = 0.87
+@export_range(0, 1) var GROUND_FRICTION : float = 0.86
+@export_range(0, 1) var GROUND_FRICTION_WHEN_MAGNETISING : float = 0.96
 
 @export_category("Push")
 @export var PUSH_STRENGTH : float = 28
@@ -19,6 +25,12 @@ extends CharacterBody2D
 @export var PULL_MAX_SPEED: float = 10000
 @export_range(0,3.14) var PULL_MOMENTUM_ROTATION : float = 1.12
 
+@export_category("Atacking")
+@export var Damage_Multiplier : float = 0.1
+@export var Attack_Vertical_Boost : float = 400
+@export var Attack_Speed_Multiplier : float = 1.4
+@export var Attack_Static_Speed_Boost : float = 30
+
 
 var loonyTime : bool = false
 var loonyTimer
@@ -28,13 +40,9 @@ var selectedMetalPos : Vector2
 var metalPropertyNode : MetalComponent
 
 func _ready() -> void:
-	pass
+	attack_Box.Attacked.connect(AttackedSomething)
 
 func _physics_process(delta: float) -> void:
-	
-	#calculate friction
-	if is_on_floor():
-		velocity.x *= GROUND_FRICTION
 	
 	velocity *= AIR_FRICTION
 	
@@ -126,8 +134,32 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity += get_gravity() * delta
 	
+	#calculate friction
+	if is_on_floor():
+		if PushorPull == 0:
+			velocity.x *= GROUND_FRICTION
+		else:
+			velocity.x *= GROUND_FRICTION_WHEN_MAGNETISING
+	
+	#rotates the player in the direction of velocity when pushing or pulling
+	if PushorPull == -1:
+		rotation = velocity.angle() - (PI / 2)
+	elif PushorPull == 1:
+		rotation = velocity.angle() - (PI / 2)
+	else:
+		rotation = 0
+	
+	#calculate damage at current speed
+	attack_Box.Damage = velocity.length() * Damage_Multiplier
+	
 	move_and_slide()
 
+#add the attack boost
+func AttackedSomething() -> void:
+	if velocity.y > -Attack_Vertical_Boost:
+		velocity.y = -Attack_Vertical_Boost
+		#velocity = velocity.reflect(Vector2(0,1)) * Attack_Speed_Multiplier
+		#velocity = Vector2(-1,-1).normalized() * velocity.length() + Vector2(-1,-1).normalized() * Attack_Boost
 
 func _on_loony_time_timeout() -> void: #handles what happens when the loony time timer runs out
 	loonyTime = false

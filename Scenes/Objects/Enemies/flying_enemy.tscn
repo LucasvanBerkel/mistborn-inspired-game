@@ -1,21 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://kihwwmy8a73k"]
+[gd_scene load_steps=6 format=3 uid="uid://kihwwmy8a73k"]
 
 [ext_resource type="PackedScene" uid="uid://d2hyo31b2i0ek" path="res://Scenes/Objects/Enemies/enemyBaseClass.tscn" id="1_qbkws"]
 [ext_resource type="PackedScene" uid="uid://dffl6e2daeojf" path="res://Scenes/Properties/metal_component.tscn" id="2_lpewf"]
 [ext_resource type="Script" uid="uid://cfb16eqip7gwj" path="res://Scripts/characters/flying_enemy.gd" id="2_oq38k"]
 [ext_resource type="Script" uid="uid://cujpl1q3747r6" path="res://Scripts/property scripts/states/FlyingIdle.gd" id="3_dvini"]
+[ext_resource type="Script" uid="uid://sk8cqmefv615" path="res://Scripts/property scripts/states/FlyingHostile.gd" id="5_cciay"]
 
 [node name="FlyingEnemy" instance=ExtResource("1_qbkws")]
 script = ExtResource("2_oq38k")
+AIRDRAG = 0.96
 
 [node name="MetalObject" parent="." index="2" instance=ExtResource("2_lpewf")]
 IsAtackable = true
 
+[node name="HealthComponent" parent="." index="4"]
+MaxHealth = 10
+Health = 10
+
 [node name="StateMachine" parent="." index="5" node_paths=PackedStringArray("InitialState")]
 InitialState = NodePath("FlyingIdle")
 
-[node name="FlyingIdle" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("enemy")]
+[node name="FlyingIdle" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("enemy", "LOSRay")]
 script = ExtResource("3_dvini")
 enemy = NodePath("../..")
+LOSRay = NodePath("../../LineOfSightRay")
 Speed = 60.0
+DistanceTillAtackState = 420.0
 metadata/_custom_type_script = "uid://cujpl1q3747r6"
+
+[node name="FlyingHostile" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("enemy", "LOSRay")]
+script = ExtResource("5_cciay")
+enemy = NodePath("../..")
+LOSRay = NodePath("../../LineOfSightRay")
+HoverSpeed = 4.8
+directionChangeChancePerSec = 0.6
+HoverDistance = 200.0

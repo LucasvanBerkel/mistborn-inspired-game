@@ -1,20 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://cc5830abh3cl2"]
+[gd_scene load_steps=7 format=3 uid="uid://cc5830abh3cl2"]
 
 [ext_resource type="Script" uid="uid://cserwcw2d2ubn" path="res://Scripts/characters/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://brwwrx51xqq6j" path="res://icon.svg" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://bhbj7syi73c1y" path="res://Assets/Character art/Player Art/mistborn game character art.png" id="2_dfgsd"]
 [ext_resource type="PackedScene" uid="uid://bbsbh75q7tapj" path="res://Scenes/Properties/attack_box.tscn" id="3_picsy"]
+[ext_resource type="PackedScene" uid="uid://dhwv7p88v5q36" path="res://Scenes/Properties/health_component.tscn" id="4_dfgsd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfgsd"]
-size = Vector2(12, 24)
+size = Vector2(10, 22.499998)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("attack_Box") groups=["player"]]
+scale = Vector2(1.2, 1.2)
+collision_layer = 2
 script = ExtResource("1_cvnsp")
+attack_Box = NodePath("AttackBox")
 SPEED = 325.0
 SPEED_INCREASE = 2680.0
 AIR_FRICTION = 0.98
-GROUND_FRICTION = 0.86
 PUSH_STRENGTH = 2700.0
 PUSH_DEGRATION = 2.0
 PUSH_MAX_SPEED = 3800.0
@@ -23,14 +26,18 @@ PULL_STRENGTH = 2800.0
 PULL_DEGRATION = 1.4
 PULL_MAX_SPEED = 3600.0
 PULL_MOMENTUM_ROTATION = 1.2
+Damage_Multiplier = 0.02
+Attack_Vertical_Boost = 520.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.4, 1)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.08, 0.16)
-texture = ExtResource("1_v0iea")
+texture_filter = 1
+position = Vector2(-2, 0)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("2_dfgsd")
 
 [node name="LoonyTime" type="Timer" parent="."]
 wait_time = 0.1
@@ -39,7 +46,9 @@ one_shot = true
 [node name="AttackBox" parent="." instance=ExtResource("3_picsy")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2(0, 1)
+position = Vector2(-9.934107e-08, 0.41666636)
 shape = SubResource("RectangleShape2D_dfgsd")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_dfgsd")]
 
 [connection signal="timeout" from="LoonyTime" to="." method="_on_loony_time_timeout"]

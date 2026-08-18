@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2hyo31b2i0ek"]
+[gd_scene load_steps=9 format=3 uid="uid://d2hyo31b2i0ek"]
 
 [ext_resource type="Texture2D" uid="uid://brwwrx51xqq6j" path="res://icon.svg" id="1_7ifby"]
 [ext_resource type="Script" uid="uid://cm4n8aoamb62q" path="res://Scripts/characters/enemyClass.gd" id="1_xbqgc"]
 [ext_resource type="PackedScene" uid="uid://lfredfopmfrk" path="res://Scenes/Properties/hurt_box.tscn" id="2_8s5qk"]
 [ext_resource type="PackedScene" uid="uid://dhwv7p88v5q36" path="res://Scenes/Properties/health_component.tscn" id="3_ifv8q"]
 [ext_resource type="PackedScene" uid="uid://fak13kh2icd0" path="res://Scenes/Properties/state_machine.tscn" id="5_f140d"]
+[ext_resource type="Script" uid="uid://c6uud8xfm5667" path="res://Scripts/property scripts/line_of_sight_ray.gd" id="6_f140d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ifby"]
 
@@ -12,6 +13,7 @@
 size = Vector2(14, 26)
 
 [node name="EnemyBaseClass" type="CharacterBody2D"]
+collision_layer = 4
 script = ExtResource("1_xbqgc")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -29,5 +31,10 @@ healthComponent = NodePath("../HealthComponent")
 shape = SubResource("RectangleShape2D_ifv8q")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ifv8q")]
+MaxHealth = 25
+Health = 25
 
 [node name="StateMachine" parent="." instance=ExtResource("5_f140d")]
+
+[node name="LineOfSightRay" type="RayCast2D" parent="."]
+script = ExtResource("6_f140d")
