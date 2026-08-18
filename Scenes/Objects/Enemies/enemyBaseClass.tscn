@@ -31,8 +31,8 @@ healthComponent = NodePath("../HealthComponent")
 shape = SubResource("RectangleShape2D_ifv8q")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ifv8q")]
-MaxHealth = 25
-Health = 25
+MaxHealth = 1000.0
+Health = 1000.0
 
 [node name="StateMachine" parent="." instance=ExtResource("5_f140d")]
 

@@ -8,6 +8,8 @@ class_name HealthComponent
 func _ready() -> void:
 	if Health > MaxHealth:
 		Health = MaxHealth
+	if Health <= 0:
+		Health = MaxHealth
 
 func _process(delta: float) -> void:
 	if Health <= 0:

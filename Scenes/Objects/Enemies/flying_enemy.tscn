@@ -14,8 +14,8 @@ AIRDRAG = 0.96
 IsAtackable = true
 
 [node name="HealthComponent" parent="." index="4"]
-MaxHealth = 10
-Health = 10
+MaxHealth = 20.0
+Health = null
 
 [node name="StateMachine" parent="." index="5" node_paths=PackedStringArray("InitialState")]
 InitialState = NodePath("FlyingIdle")

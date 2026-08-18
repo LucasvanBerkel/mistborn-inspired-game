@@ -27,7 +27,7 @@ PULL_DEGRATION = 1.4
 PULL_MAX_SPEED = 3600.0
 PULL_MOMENTUM_ROTATION = 1.2
 Damage_Multiplier = 0.02
-Attack_Vertical_Boost = 520.0
+Attack_Vertical_Boost = 0.781
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.4, 1)

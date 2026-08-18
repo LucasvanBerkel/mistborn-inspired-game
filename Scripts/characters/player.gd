@@ -27,9 +27,7 @@ class_name PlayerCharacter
 
 @export_category("Atacking")
 @export var Damage_Multiplier : float = 0.1
-@export var Attack_Vertical_Boost : float = 400
-@export var Attack_Speed_Multiplier : float = 1.4
-@export var Attack_Static_Speed_Boost : float = 30
+@export_range(0,5) var Attack_Vertical_Boost : float = 400
 
 
 var loonyTime : bool = false
@@ -73,14 +71,15 @@ func _physics_process(delta: float) -> void:
 	var PushorPull : int = 0
 	
 
-	if Input.is_action_pressed("Push"): #push action handler
-		PushorPull = 1
-	
-	if Input.is_action_pressed("Pull"): #pull action handler
-		if PushorPull == 0:
-			PushorPull = -1
-		else:
-			PushorPull = 0
+	if is_instance_valid(selectedMetalNode):
+		if Input.is_action_pressed("Push"): #push action handler
+			PushorPull = 1
+		
+		if Input.is_action_pressed("Pull"): #pull action handler
+			if PushorPull == 0:
+				PushorPull = -1
+			else:
+				PushorPull = 0
 	
 	if PushorPull != 0: #checking if the player is pushing or pulling before doing the math for it
 		var magnetismForce : Vector2 = position - selectedMetalPos #getting the normalized direction vector
@@ -156,10 +155,11 @@ func _physics_process(delta: float) -> void:
 
 #add the attack boost
 func AttackedSomething() -> void:
-	if velocity.y > -Attack_Vertical_Boost:
-		velocity.y = -Attack_Vertical_Boost
-		#velocity = velocity.reflect(Vector2(0,1)) * Attack_Speed_Multiplier
-		#velocity = Vector2(-1,-1).normalized() * velocity.length() + Vector2(-1,-1).normalized() * Attack_Boost
+	velocity.y = -Attack_Vertical_Boost * velocity.length()
+	
+	selectedMetalNode = null
+	magnetism_Manager.LockOff()
+
 
 func _on_loony_time_timeout() -> void: #handles what happens when the loony time timer runs out
 	loonyTime = false
