@@ -154,11 +154,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 #add the attack boost
-func AttackedSomething() -> void:
-	velocity.y = -Attack_Vertical_Boost * velocity.length()
-	
-	selectedMetalNode = null
-	magnetism_Manager.LockOff()
+func AttackedSomething(hurtBox : HurtBox) -> void:
+	if hurtBox.get_parent() == selectedMetalNode:
+		velocity.y = -Attack_Vertical_Boost * velocity.length()
+		
+		selectedMetalNode = null
+		magnetism_Manager.LockOff()
 
 
 func _on_loony_time_timeout() -> void: #handles what happens when the loony time timer runs out
