@@ -16,6 +16,7 @@ IsAtackable = true
 [node name="HealthComponent" parent="." index="4"]
 MaxHealth = 20.0
 Health = null
+InvulnerabilityAfterHit = 0.4
 
 [node name="StateMachine" parent="." index="5" node_paths=PackedStringArray("InitialState")]
 InitialState = NodePath("FlyingIdle")

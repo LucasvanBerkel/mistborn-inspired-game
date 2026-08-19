@@ -33,6 +33,7 @@ shape = SubResource("RectangleShape2D_ifv8q")
 [node name="HealthComponent" parent="." instance=ExtResource("3_ifv8q")]
 MaxHealth = 1000.0
 Health = 1000.0
+InvulnerabilityAfterHit = 0.4
 
 [node name="StateMachine" parent="." instance=ExtResource("5_f140d")]
 
