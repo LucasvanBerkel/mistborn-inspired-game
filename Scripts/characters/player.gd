@@ -28,7 +28,8 @@ class_name PlayerCharacter
 @export_category("Atacking")
 @export var Damage_Multiplier : float = 0.1
 @export_range(0,5) var Attack_Vertical_Boost : float = 400
-
+@export_range(0,1) var Attack_Gravity_Percentage : float = 0.2
+#@export var Attack_Momentum_Rotation_Assistence : float = 12
 
 var loonyTime : bool = false
 var loonyTimer
@@ -124,10 +125,10 @@ func _physics_process(delta: float) -> void:
 				
 				velocity -= magnetismForce * PULL_STRENGTH * forceDegration * delta
 	
-	# Add the gravity.(or reduced gravity when "pushing")
+	# Add the gravity.(or reduced gravity when "pushing" or attacking)
 	if not is_on_floor():
 		if is_instance_valid(metalPropertyNode) && metalPropertyNode.IsAtackable == true && PushorPull == -1:
-			pass
+			velocity += get_gravity() * Attack_Gravity_Percentage * delta
 		elif PushorPull == 1:
 			velocity += get_gravity() * PUSH_GRAVITY_PERCENTAGE * delta
 		else:

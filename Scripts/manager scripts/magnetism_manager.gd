@@ -2,6 +2,10 @@ extends Node
 class_name MagnetismManager
 
 @export var MetalTileMap : TileMapLayer
+@export var player : PlayerCharacter
+@export var rotationAnimationSpeed = 0.5
+
+@onready var line : Line2D = $indicatorLine
 
 signal selected_metal_location(selectedNode : Node)
 var staticMetalObject : PackedScene = load("res://Scenes/Objects/static_metal_object.tscn")
@@ -24,6 +28,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
+	self.rotation += rotationAnimationSpeed * delta
+	
 	if lockedOn == false:
 		var mousePos : Vector2
 		mousePos = get_viewport().get_camera_2d().get_global_mouse_position()
@@ -39,13 +45,16 @@ func _process(delta: float) -> void:
 	
 	if is_instance_valid(closestNode):
 		self.position = closestNode.position
-	
-	if Input.is_action_just_pressed("Push") or Input.is_action_just_pressed("Pull"):
-		if is_instance_valid(closestNode):
-			lockedOn = true
+		line.clear_points()
+		line.add_point(line.to_local(self.position))
+		line.add_point(line.to_local(player.position))
 	
 	if Input.is_action_just_released("Push") or Input.is_action_just_released("Pull"):
 		lockedOn = false
+	
+	if Input.is_action_pressed("Push") or Input.is_action_pressed("Pull"):
+		if is_instance_valid(closestNode):
+			lockedOn = true
 	
 	if !is_instance_valid(closestNode):
 		lockedOn = false
